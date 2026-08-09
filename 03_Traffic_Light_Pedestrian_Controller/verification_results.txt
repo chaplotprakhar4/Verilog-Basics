@@ -1,0 +1,15 @@
+TRAFFIC LIGHT + PEDESTRIAN CONTROLLER
+=====================================
+
+Simulation Environment : EDA Playground
+Simulator               : Icarus Verilog
+Waveform Viewer         : EPWave
+
+Verification Status:
+ALL TESTS PASSED
+
+Final Simulation Output:
+T=280 CLK=0 RESET=0 BUTTON=0 | RED=0 YELLOW=0 GREEN=1 | WALK=0 DONT=1 COUNT=0
+T=285 CLK=1 RESET=0 BUTTON=0 | RED=0 YELLOW=0 GREEN=1 | WALK=0 DONT=1 COUNT=0
+
+Simulation completed successfully.
