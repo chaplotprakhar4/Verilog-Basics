@@ -1,276 +1,198 @@
 # Verilog-Basics
 
-A hands-on collection of **Verilog/SystemVerilog RTL design and verification projects**, built while learning digital design, RTL coding, simulation, and testbench development.
+A hands-on **Verilog/SystemVerilog RTL design and verification repository** documenting my journey from digital logic fundamentals to more advanced RTL and VLSI-oriented projects.
 
-The goal of this repository is to build digital-design fundamentals through practical projects rather than only theoretical study.
-
-
-# 04_FIFO — Synchronous FIFO
-
-A **First-In First-Out (FIFO)** buffer implemented in SystemVerilog and verified using a dedicated testbench.
-
-FIFO is commonly used for temporary data storage and buffering between different parts of a digital system.
-
-### FIFO Concept
-
-```text
-                 WRITE
-                   │
-                   ▼
-              ┌─────────┐
-              │         │
-din ─────────►│  FIFO   │─────────► dout
-              │         │
-              └─────────┘
-                   ▲
-                   │
-                  READ
-```
-
-The first data written into the FIFO is the first data read out.
-
-```text
-Write:  10 → 20 → 30
-
-Read:   10 → 20 → 30
-```
+The focus of this repository is **learning by implementation** — writing RTL, creating testbenches, simulating designs, analyzing waveforms, debugging errors, and maintaining projects using Git/GitHub.
 
 ---
 
-## 🔧 FIFO Features
+## 📚 Projects
 
-The implementation includes:
+| #  | Project                                                                         | Concepts Covered                                                     | Status      |
+| -- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------- |
+| 01 | [AND Gate](./01_AND_Gate)                                                       | Basic combinational logic, RTL, testbench                            | ✅ Completed |
+| 02 | [OR Gate](./02_OR_Gate)                                                         | Combinational logic, RTL, simulation                                 | ✅ Completed |
+| 03 | [Traffic Light Pedestrian Controller](./03_Traffic_Light_Pedestrian_Controller) | FSM, sequential logic, counters, pedestrian request handling         | ✅ Completed |
+| 04 | [FIFO](./04_FIFO)                                                               | Memory, read/write pointers, counter, full/empty flags, verification | ✅ Completed |
 
-* Parameterized data width
-* Parameterized FIFO depth
-* Write enable (`wr_en`)
-* Read enable (`rd_en`)
-* Input data (`din`)
-* Output data (`dout`)
-* Write pointer (`wr_ptr`)
-* Read pointer (`rd_ptr`)
-* Data counter (`count`)
-* Full flag (`full`)
-* Empty flag (`empty`)
-* Synchronous read/write operation
-* Asynchronous reset
-* SystemVerilog RTL implementation
-* Dedicated verification testbench
-* Waveform generated from simulation
+More projects will be added as I progress.
 
 ---
 
-## 📁 Project Structure
+## 🛠️ Tools & Technologies
 
-```text
-04_FIFO/
-│
-├── design.sv
-├── testbench.sv
-└── waveform.png
-```
-
-### `design.sv`
-
-Contains the FIFO RTL implementation.
-
-The FIFO uses:
-
-* Memory array for data storage
-* Write pointer to select the write location
-* Read pointer to select the read location
-* Counter to track the number of stored elements
-* `full` flag to prevent writing when the FIFO is full
-* `empty` flag to prevent reading when the FIFO is empty
-
-### `testbench.sv`
-
-The testbench:
-
-* Generates the clock
-* Applies reset
-* Performs write operations
-* Performs read operations
-* Checks FIFO status
-* Verifies FIFO behavior
-* Generates simulation waveforms
-* Reports test results
-
-### `waveform.png`
-
-Simulation waveform showing the behavior of the FIFO signals during verification.
-
----
-
-## 🧠 FIFO Operation
-
-### Write Operation
-
-When:
-
-```text
-wr_en = 1
-empty/full conditions allow writing
-```
-
-data is stored in FIFO memory:
-
-```text
-din → memory[wr_ptr]
-```
-
-Then:
-
-```text
-wr_ptr  → increments
-count   → increments
-```
-
-If the FIFO becomes full:
-
-```text
-full = 1
-```
-
----
-
-### Read Operation
-
-When:
-
-```text
-rd_en = 1
-empty condition allows reading
-```
-
-data is read from:
-
-```text
-memory[rd_ptr] → dout
-```
-
-Then:
-
-```text
-rd_ptr  → increments
-count   → decrements
-```
-
-If the FIFO becomes empty:
-
-```text
-empty = 1
-```
-
----
-
-## 🚦 FIFO Status
-
-The important status signals are:
-
-| Signal      | Meaning                             |
-| ----------- | ----------------------------------- |
-| `full = 1`  | FIFO cannot accept another write    |
-| `empty = 1` | FIFO has no data available to read  |
-| `count`     | Number of elements currently stored |
-| `wr_ptr`    | Current write location              |
-| `rd_ptr`    | Current read location               |
-
-For an empty FIFO:
-
-```text
-count = 0
-empty = 1
-```
-
-For a full FIFO:
-
-```text
-count = DEPTH
-full = 1
-```
-
----
-
-## 🧪 Verification
-
-The FIFO was compiled and simulated using **Icarus Verilog**.
-
-### Compile
-
-```bash
-iverilog -g2012 -Wall -o fifo_sim design.sv testbench.sv
-```
-
-### Run simulation
-
-```bash
-vvp fifo_sim
-```
-
-The testbench verifies FIFO operations and reports:
-
-```text
-ALL TESTS PASSED
-```
-
-The simulation waveform was also captured and included in this project as:
-
-```text
-waveform.png
-```
-
----
-
-## 🛠️ Tools Used
-
-* Verilog/SystemVerilog
+* Verilog
+* SystemVerilog
 * Icarus Verilog
 * EDA Playground
 * Git
 * GitHub
+* Linux / Unix command line
 
 ---
 
-## 📈 Learning Progression
+## 🧠 Concepts Covered
 
-The projects in this repository are being developed progressively:
+### Digital Logic
+
+* AND, OR, NOT
+* NAND, NOR
+* XOR, XNOR
+* Combinational logic
+* Sequential logic
+
+### RTL Design
+
+* Modules and ports
+* Parameters
+* Registers and memories
+* Blocking and non-blocking assignments
+* `always` / `always_ff`
+* Counters
+* Multiplexers
+* Finite State Machines
+* FIFO architecture
+
+### Verification
+
+* Testbench development
+* Clock and reset generation
+* Stimulus generation
+* Self-checking testbenches
+* Simulation
+* Waveform analysis
+* Debugging
+
+---
+
+## 🔬 Project Workflow
+
+Each project follows a practical RTL development flow:
 
 ```text
-Basic Logic Gates
+Problem Definition
        ↓
-Combinational Logic
+RTL Design
        ↓
-Sequential Logic
+Testbench Development
        ↓
-FSM Design
+Compilation
        ↓
-FIFO
+Simulation
        ↓
-More RTL Design
+Waveform Analysis
        ↓
-Verification
+Debugging
        ↓
-VLSI / DFT-Oriented Projects
+Git Commit
+       ↓
+GitHub
 ```
-
-Each project includes RTL implementation and simulation/verification wherever applicable.
 
 ---
 
-## 🎯 Objective
+## ▶️ Simulation
 
-This repository is part of my hands-on learning journey toward **RTL Design, Verification, VLSI, and DFT**.
+For projects using Icarus Verilog:
 
-The focus is on building practical understanding through:
+### Compile
 
-* RTL coding
-* Testbench development
-* Simulation
-* Debugging
-* Waveform analysis
-* Git/GitHub project management
+```bash
+iverilog -g2012 -Wall -o simulation design.sv testbench.sv
+```
 
-More digital-design and VLSI projects will be added progressively.
-# Verilog-Basics
-Verilog HDL practice programs and digital design implementations.
+### Run
+
+```bash
+vvp simulation
+```
+
+### Waveform
+
+Projects may include a waveform generated during simulation or through EDA Playground.
+
+---
+
+## 📁 Repository Structure
+
+```text
+Verilog-Basics/
+│
+├── 01_AND_Gate/
+│   ├── design.sv
+│   └── testbench.sv
+│
+├── 02_OR_Gate/
+│   ├── design.sv
+│   └── testbench.sv
+│
+├── 03_Traffic_Light_Pedestrian_Controller/
+│   ├── design.sv
+│   ├── testbench.sv
+│   └── waveform.jpeg
+│
+├── 04_FIFO/
+│   ├── design.sv
+│   ├── testbench.sv
+│   └── waveform.png
+│
+└── README.md
+```
+
+---
+
+## 📈 Learning Roadmap
+
+```text
+Digital Logic
+      ↓
+Verilog Fundamentals
+      ↓
+Combinational RTL
+      ↓
+Sequential RTL
+      ↓
+FSM Design
+      ↓
+Counters & Memories
+      ↓
+FIFO
+      ↓
+Advanced RTL
+      ↓
+Verification
+      ↓
+STA
+      ↓
+DFT / VLSI
+```
+
+---
+
+## 🎯 Goal
+
+The goal of this repository is to build strong practical skills in:
+
+* RTL Design
+* Verilog/SystemVerilog
+* Digital Design
+* Functional Verification
+* Timing Concepts
+* VLSI Design
+* DFT Fundamentals
+
+I am continuously adding projects and improving the existing implementations as I learn new concepts.
+
+---
+
+## 👨‍💻 Author
+
+**Prakhar Chaplot**
+
+B.Tech — Electronics & Communication Engineering
+
+Interested in **RTL Design, VLSI, DFT, and Semiconductor Design**.
+
+---
+
+⭐ This repository is a record of my continuous learning and hands-on practice in digital design and VLSI.
